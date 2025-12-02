@@ -43,3 +43,26 @@ Run `vim` and update the bundles with:
 :PluginInstall!
 ```
 
+
+# TO Support LSP:
+```
+-- Configure Jac LSP separately (not managed by Mason)                                                   │
+local lspconfig = require('lspconfig')                                                                   │
+local configs = require('lspconfig.configs')                                                             │
+                                                                                                         │
+if not configs.jac_ls then                                                                               │
+  configs.jac_ls = {                                                                                     │
+    default_config = {                                                                                   │
+      cmd = { 'jac', 'lsp' },                                                                            │
+      filetypes = { 'jac' },                                                                             │
+      root_dir = lspconfig.util.root_pattern('.git', vim.fn.getcwd()),                                   │
+      single_file_support = true,                                                                        │
+    },                                                                                                   │
+  }                                                                                                      │
+end                                                                                                      │
+                                                                                                         │
+lspconfig.jac_ls.setup {                                                                                 │
+  capabilities = capabilities,                                                                           │
+}                                                                                                        │
+```
+
